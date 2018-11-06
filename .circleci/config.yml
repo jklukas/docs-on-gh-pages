@@ -1,0 +1,50 @@
+version: 2
+
+jobs:
+  docs-build:
+    docker:
+      - image: python:3.7
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Build docs
+          command: cd docs/ && make html
+      - persist_to_workspace:
+          root: docs/_build
+          paths: html
+
+  docs-deploy:
+    docker:
+      - image: node:8.10.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: docs/_build
+      - run:
+          name: Disable jekyll builds
+          command: touch docs/_build/html/.nojekyll
+      - add_ssh_keys:
+          fingerprints:
+            - "bb:e1:fa:08:e2:ff:a4:ed:f9:b0:64:c0:e6:07:0d:08"
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: |
+            git config user.email "jeff@klukas.net"
+            git config user.name "jklukas"
+            npm install -g --silent gh-pages@2.0.1
+            gh-pages --dotfiles --message "[skip ci] Updates" --dist docs/_build/html
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - docs-build
+      - docs-deploy:
+          requires:
+            - docs-build
+          filters:
+            branches:
+              only: master
