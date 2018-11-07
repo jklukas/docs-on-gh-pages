@@ -19,14 +19,14 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Docs on GitHub Pages'
-copyright = '2018, Jeff Klukas'
-author = 'Jeff Klukas'
+project = u'mylib'
+copyright = u'2018, J. Doe'
+author = u'J. Doe'
 
 # The short X.Y version
-version = ''
+version = u''
 # The full version, including alpha/beta/rc tags
-release = ''
+release = u''
 
 
 # -- General configuration ---------------------------------------------------
@@ -63,7 +63,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = [u'_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
@@ -101,7 +101,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'DocsonGitHubPagesdoc'
+htmlhelp_basename = 'mylibdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -128,8 +128,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'DocsonGitHubPages.tex', 'Docs on GitHub Pages Documentation',
-     'Jeff Klukas', 'manual'),
+    (master_doc, 'mylib.tex', u'mylib Documentation',
+     u'J. Doe', 'manual'),
 ]
 
 
@@ -138,7 +138,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'docsongithubpages', 'Docs on GitHub Pages Documentation',
+    (master_doc, 'mylib', u'mylib Documentation',
      [author], 1)
 ]
 
@@ -149,8 +149,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'DocsonGitHubPages', 'Docs on GitHub Pages Documentation',
-     author, 'DocsonGitHubPages', 'One line description of project.',
+    (master_doc, 'mylib', u'mylib Documentation',
+     author, 'mylib', 'One line description of project.',
      'Miscellaneous'),
 ]
 

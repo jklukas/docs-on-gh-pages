@@ -1,6 +1,18 @@
 version: 2
 
 jobs:
+  test:
+    docker:
+      - image: python:3.7
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Test
+          command: pytest
+
   docs-build:
     docker:
       - image: python:3.7
@@ -26,24 +38,28 @@ jobs:
       - run:
           name: Disable jekyll builds
           command: touch docs/_build/html/.nojekyll
+      - run:
+          name: Install and configure dependencies
+          command: |
+            npm install -g --silent gh-pages@2.0.1
+            git config user.email "ci-build@klukas.net"
+            git config user.name "ci-build"
       - add_ssh_keys:
           fingerprints:
             - "59:ad:fd:64:71:eb:81:01:6a:d7:1a:c9:0c:19:39:af"
       - run:
           name: Deploy docs to gh-pages branch
-          command: |
-            git config user.email "ci-build@klukas.net"
-            git config user.name "ci-build"
-            npm install -g --silent gh-pages@2.0.1
-            gh-pages --dotfiles --message "[skip ci] Updates" --dist docs/_build/html
+          command: gh-pages --dotfiles --message "[skip ci] Updates" --dist docs/_build/html
 
 workflows:
   version: 2
   build:
     jobs:
+      - test
       - docs-build
       - docs-deploy:
           requires:
+            - test
             - docs-build
           filters:
             branches:
